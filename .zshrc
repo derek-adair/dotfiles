@@ -159,7 +159,7 @@ usePy() { source $PY_VIRTUALENV_DIR/$1/bin/activate;}
 alias listPy='ls $PY_VIRTUALENV_DIR'
 newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
 
-sserver() {python -m SimpleHTTPServer $1}
+http() {python -m SimpleHTTPServer $1}
 
 ########################### ENV VARS ##########################
 export ATLAS_TOKEN=4Z7hg-_zLiW4_8P1WyhnsoXKhMfJiy_o8h6FCjNr6ZPVm_j3aTTDw4quVYMwvFJJyCz
