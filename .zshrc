@@ -107,9 +107,6 @@ function cd(){
 source ~/.nvm/nvm.sh
 
 
-# change to dev dir on ssh
-cd ~/Dev
-
 # xvfb-run shortcut
 alias fbr="xvfb-run"
 ############################# Git ############################
@@ -122,6 +119,11 @@ export PACKER_CACHE_DIR=/var/cache/packer/packer_cache/
 ########################### Docker  ############################
 ## GENERAL ##
 alias comp='docker-compose'
+source_docker(){
+    eval $(docker-machine env $1);
+    echo "Docker Host :" $DOCKER_HOST;
+}
+source_default(){source_docker default;}
 gime() { sudo chown -R derek:derek $@;}
 
 ## CONTAINERS ##
@@ -133,10 +135,15 @@ attach_c(){toss $1 /bin/bash}
 manage_c() { comp run --rm web python manage.py $@;}
 # Used to chown any files i generate with docker
 
+alias stop_containers='docker stop $(docker ps -q)'
 # kill all containers
-alias k9containers='docker kill $(docker ps -q)'
+alias kill_containers='docker kill $(docker ps -q)'
+# remove all non running containers
 alias remove_containers='docker rm `docker ps -aq`'
+# Nuke all containers from orbit
 alias nuke_containers='docker rm -f $(docker ps -a -q)'
+# leave nothing...
+alias burn_it_all='docker rm -f $(docker ps -aq) && docker volume rm $(docker volume ls -q)'
 
 ## IMAGES ##
 # Build a template
@@ -146,7 +153,9 @@ d_build() { docker build -t="$1" . }
 alias remove_images='docker rmi `docker images -q`'
 #Kill all images and containers that are not running
 alias tactical_nuke='remove_images && docker rmi -f `docker images -q`'
-alias nuke_from_orbot='nuke_containers && docker rmi -f `docker images -q`'
+alias nuke_from_orbit='nuke_containers && docker rmi -f `docker images -q`'
+alias clean_images='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
+
 
 #Django Docker things
 function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$PWD":/usr/src/app -w /usr/src/app django django-admin.py startproject $1}
