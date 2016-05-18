@@ -124,7 +124,7 @@ source_docker(){
     echo "Docker Host :" $DOCKER_HOST;
 }
 source_default(){source_docker default;}
-gime() { sudo chown -R derek:derek $@;}
+dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "http://$(docker-machine ip):$1";}
 
 ## CONTAINERS ##
 toss(){docker run -it --rm $@}
@@ -134,6 +134,8 @@ attach_c(){toss $1 /bin/bash}
 # run a manage.py command for django
 manage_c() { comp run --rm web python manage.py $@;}
 # Used to chown any files i generate with docker
+gime() { sudo chown -R derek:derek $@;}
+
 
 alias stop_containers='docker stop $(docker ps -q)'
 # kill all containers
