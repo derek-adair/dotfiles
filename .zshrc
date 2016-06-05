@@ -123,6 +123,14 @@ source_docker(){
     eval $(docker-machine env $1);
     echo "Docker Host :" $DOCKER_HOST;
 }
+kick_docker(){
+    restart_machine;
+    source_default;
+}
+restart_machine(){
+    docker-machine kill $1;
+    docker-machine start $1;
+}
 source_default(){source_docker default;}
 dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "http://$(docker-machine ip):$1";}
 
@@ -172,9 +180,6 @@ newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/re
 
 http() {python -m SimpleHTTPServer $1}
 
-########################### ENV VARS ##########################
-export ATLAS_TOKEN=4Z7hg-_zLiW4_8P1WyhnsoXKhMfJiy_o8h6FCjNr6ZPVm_j3aTTDw4quVYMwvFJJyCz
-
 ########################### tmux ##########################
 alias tm='tmux'
 tmat() { tm a -t $1;}
@@ -183,5 +188,3 @@ kick_tmux() { tm new-session -A -s main; }
 ########################### EC2 ##########################
 export EC2_HOME=/usr/local/ec2/ec2-api-tools-1.7.3.0
 export PATH=$PATH:$EC2_HOME/bin 
-export AWS_ACCESS_KEY=AKIAIJPAGUUMWEDVCNOA
-export AWS_SECRET_KEY=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
