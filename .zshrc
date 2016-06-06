@@ -152,7 +152,8 @@ alias kill_containers='docker kill $(docker ps -q)'
 alias remove_containers='docker rm `docker ps -aq`'
 # Nuke all containers from orbit
 alias nuke_containers='docker rm -f $(docker ps -a -q)'
-# leave nothing...
+# Essentially resets all container runtimes and leaves nothing
+#  - deletes all containers and volumes
 alias burn_it_all='docker rm -f $(docker ps -aq) && docker volume rm $(docker volume ls -q)'
 
 ## IMAGES ##
