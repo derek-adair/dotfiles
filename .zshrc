@@ -173,19 +173,16 @@ function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$
 
 ########################### Python ############################
 
-## Python Virtualenvs ##
-PY_VIRTUALENV_DIR='/home/derek/Dev/.tools/virtualenv/python'
-usePy() { source $PY_VIRTUALENV_DIR/$1/bin/activate;}
-alias listPy='ls $PY_VIRTUALENV_DIR'
-newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
-
-http() {python -m SimpleHTTPServer $1}
+## Python Virtualenvs 
+#PY_VIRTUALENV_DIR='/home/derek/Dev/.tools/virtualenv/python'
+#usePy() { source $PY_VIRTUALENV_DIR/$1/bin/activate;}
+#alias listPy='ls $PY_VIRTUALENV_DIR'
+#newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
+#
+#http() {python -m SimpleHTTPServer $1}
 
 ########################### tmux ##########################
 alias tm='tmux'
 tmat() { tm a -t $1;}
 
 kick_tmux() { tm new-session -A -s main; }
-########################### EC2 ##########################
-export EC2_HOME=/usr/local/ec2/ec2-api-tools-1.7.3.0
-export PATH=$PATH:$EC2_HOME/bin 
