@@ -11,3 +11,6 @@ ZSHRC:
 
 UPDATE:
 	git remote update && git pull origin master;
+
+CHANGES:
+	cp ~/.zshrc ./;
