@@ -14,3 +14,6 @@ UPDATE:
 
 CHANGES:
 	cp ~/.zshrc ./;
+	cp ~/.tmux.conf ./;
+	cp ~/.vimrc ./;
+	git status;
