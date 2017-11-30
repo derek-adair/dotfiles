@@ -181,6 +181,9 @@ newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/re
 
 http() {python -m SimpleHTTPServer $1}
 
+## Load up the python 3 virtualenv by default
+usePy py3
+
 ########################### tmux ##########################
 alias tm='tmux'
 tmat() { tm a -t $1;}
