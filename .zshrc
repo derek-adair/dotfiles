@@ -173,13 +173,13 @@ function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$
 
 ########################### Python ############################
 
-## Python Virtualenvs 
-#PY_VIRTUALENV_DIR='/home/derek/Dev/.tools/virtualenv/python'
-#usePy() { source $PY_VIRTUALENV_DIR/$1/bin/activate;}
-#alias listPy='ls $PY_VIRTUALENV_DIR'
-#newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
-#
-#http() {python -m SimpleHTTPServer $1}
+## Python Virtualenvs ##
+PY_VIRTUALENV_DIR='/home/derek/Dev/.tools/virtualenv/python'
+usePy() { source $PY_VIRTUALENV_DIR/$1/bin/activate;}
+alias listPy='ls $PY_VIRTUALENV_DIR'
+newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
+
+http() {python -m SimpleHTTPServer $1}
 
 ########################### tmux ##########################
 alias tm='tmux'
