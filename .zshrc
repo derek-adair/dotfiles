@@ -49,10 +49,7 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-export DEV_DIR="/home/derek/dev"
-
-export PATH="/opt/local/bin:/opt/local/sbin:/opt/local/bin:/opt/local/sbin:/Users/derekadair/dev/_utilities:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -80,22 +77,13 @@ export PATH="/opt/local/bin:/opt/local/sbin:/opt/local/bin:/opt/local/sbin:/User
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
 
 ##############################################################
 ######################### dereks stuff #######################
 ##############################################################
 
 
-# Path Stuff
-export PATH="/home/derek/Dev/.tools/atlas/packer:$PATH"
-export PATH="/home/derek/Dev/.tools/atlas/terraform:$PATH"
-
 ############################# zsh mods ############################
-#attempt at mimicing pbcopy/pbpaste (suspected bug with working via SSH)
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
 # destroy all the cache
 function clear_pyc(){ find . -name "*.pyc" -exec rm -rf {} \;}
 # list dirs after i change
@@ -108,15 +96,11 @@ function cd(){
 source ~/.nvm/nvm.sh
 
 
-# xvfb-run shortcut
-alias fbr="xvfb-run"
 ############################# Git ############################
 alias ca='git add . && git commit -am'
 alias gch='git cherry-pick'
 alias kill_branch='git branch -D'
 
-########################### packer  ############################
-export PACKER_CACHE_DIR=/var/cache/packer/packer_cache/
 ########################### Docker  ############################
 ## GENERAL ##
 alias comp='docker-compose'
@@ -168,7 +152,6 @@ alias tactical_nuke='remove_images && docker rmi -f `docker images -q`'
 alias nuke_from_orbit='nuke_containers && docker rmi -f `docker images -q`'
 alias clean_images='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
 
-
 #Django Docker things
 function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$PWD":/usr/src/app -w /usr/src/app django django-admin.py startproject $1}
 
@@ -184,7 +167,7 @@ newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/re
 http() {python -m SimpleHTTPServer $1}
 
 ## Load up the python 3 virtualenv by default
-usePy py3
+#usePy py3
 
 ########################### tmux ##########################
 alias tm='tmux'
