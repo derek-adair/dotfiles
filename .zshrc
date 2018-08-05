@@ -149,7 +149,8 @@ d_build() { docker build -t="$1" . }
 alias remove_images='docker rmi `docker images -q`'
 #Kill all images and containers that are not running
 alias tactical_nuke='remove_images && docker rmi -f `docker images -q`'
-alias nuke_from_orbit='nuke_containers && docker rmi -f `docker images -q`'
+alias nuke_volumes='docker volume rm $(docker volume ls -q)'
+alias nuke_from_orbit='nuke_containers && docker rmi -f `docker images -q` && docker volume rm `docker volume ls -q`'
 alias clean_images='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
 
 #Django Docker things
