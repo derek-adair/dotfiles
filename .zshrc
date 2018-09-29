@@ -127,7 +127,7 @@ attach_c(){toss $1 /bin/bash}
 # run a manage.py command for django
 manage_c() { comp run --rm web python manage.py $@;}
 # Used to chown any files i generate with docker
-gime() { sudo chown -R derek:derek $@;}
+gime() { sudo chown -R $USER:$USER $@;}
 
 
 alias stop_containers='docker stop $(docker ps -q)'
@@ -173,5 +173,6 @@ http() {python -m SimpleHTTPServer $1}
 ########################### tmux ##########################
 alias tm='tmux'
 tmat() { tm a -t $1;}
+tmswap() {tm switch -t $1;}
 
 kick_tmux() { tm new-session -A -s main; }
