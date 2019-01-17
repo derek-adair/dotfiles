@@ -49,7 +49,7 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="~/tools/virtualenv/bin:~/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -168,12 +168,6 @@ alias listPy='ls $PY_VIRTUALENV_DIR'
 newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
 
 http() {python -m SimpleHTTPServer $1}
-
-## Load up the python 3 virtualenv by default
-usePy python3
-alias python=python3
-alias pip=pip3
-
 ########################### tmux ##########################
 alias tm='tmux'
 tmat() { tm a -t $1;}
