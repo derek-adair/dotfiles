@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -82,19 +82,19 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 ######################### dereks stuff #######################
 ##############################################################
 
+export DEV_DIR=~/
+# Load node virtual manager
+source ~/.nvm/nvm.sh
 
-############################# zsh mods ############################
+
+############################# bash stuff ############################
 # destroy all the cache
 function clear_pyc(){ find . -name "*.pyc" -exec rm -rf {} \;}
 # list dirs after i change
 function cd(){
-
     builtin cd "$@" && ls
-    }
-
-# Load node virtual manager
-source ~/.nvm/nvm.sh
-
+}
+function untar(){tar -xvzf $@}
 
 ############################# Git ############################
 alias ca='git add . && git commit -am'
@@ -104,24 +104,11 @@ alias kill_branch='git branch -D'
 ########################### Docker  ############################
 ## GENERAL ##
 alias comp='docker-compose'
-source_docker(){
-    eval $(docker-machine env $1);
-    echo "Docker Host :" $DOCKER_HOST;
-}
-kick_docker(){
-    restart_machine;
-    source_default;
-}
-restart_machine(){
-    docker-machine kill $1;
-    docker-machine start $1;
-}
-source_default(){source_docker default;}
-dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "http://$(docker-machine ip):$1";}
 
 ## CONTAINERS ##
 toss(){docker run -it --rm $@}
-snatch(){docker exec -it $1 /bin/bash}
+hijack(){docker exec -it $1 bash}
+snatch(){docker exec -it $@}
 #Start a container 
 attach_c(){toss $1 /bin/bash}
 # run a manage.py command for django
@@ -132,7 +119,7 @@ gime() { sudo chown -R $USER:$USER $@;}
 
 alias stop_containers='docker stop $(docker ps -q)'
 # kill all containers
-alias kill_containers='docker kill $(docker ps -q)'
+alias kill_em_all='docker kill $(docker ps -q)'
 # remove all non running containers
 alias remove_containers='docker rm `docker ps -aq`'
 # Nuke all containers from orbit
@@ -148,7 +135,7 @@ d_build() { docker build -t="$1" . }
 # Removes all images and containers that are not running
 alias remove_images='docker rmi `docker images -q`'
 #Kill all images and containers that are not running
-alias tactical_nuke='remove_images && docker rmi -f `docker images -q`'
+alias tactical_nuke='remove_containers && remove_images'
 alias nuke_volumes='docker volume rm $(docker volume ls -q)'
 alias nuke_from_orbit='nuke_containers && docker rmi -f `docker images -q` && docker volume rm `docker volume ls -q`'
 alias clean_images='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
@@ -160,7 +147,7 @@ function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$
 
 ## Python Virtualenvs ##
 
-export PY_VIRTUALENV_DIR="${DEV_DIR}/.tools/virtualenv/python"
+export PY_VIRTUALENV_DIR="${DEV_DIR}tools/virtualenv"
 usePy() { source $PY_VIRTUALENV_DIR/$1/bin/activate;}
 alias listPy='ls $PY_VIRTUALENV_DIR'
 newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
@@ -168,11 +155,34 @@ newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/re
 http() {python -m SimpleHTTPServer $1}
 
 ## Load up the python 3 virtualenv by default
-#usePy py3
+usePy python3
 
 ########################### tmux ##########################
 alias tm='tmux'
 tmat() { tm a -t $1;}
 tmswap() {tm switch -t $1;}
 
-kick_tmux() { tm new-session -A -s main; }
+# Auto Start
+if [[ -z "$TMUX" ]] then
+  tmux_session='#OMZ'
+
+  if ! tmux has-session -t "$tmux_session" 2> /dev/null; then
+    # Disable the destruction of unattached sessions globally.
+    tmux set-option -g destroy-unattached off &> /dev/null
+
+    # Create a new session.
+    tmux new-session -d -s "$tmux_session"
+
+    # Disable the destruction of the new, unattached session.
+    tmux set-option -t "$tmux_session" destroy-unattached off &> /dev/null
+
+    # Enable the destruction of unattached sessions globally to prevent
+    # an abundance of open, detached sessions.
+    tmux set-option -g destroy-unattached on &> /dev/null
+  fi
+
+  exec tmux new-session -t "$tmux_session"
+fi
+
+########################### powerline ####################
+. /home/ubuntu/tools/virtualenv/python3/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh
