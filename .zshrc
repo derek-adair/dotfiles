@@ -104,6 +104,7 @@ alias kill_branch='git branch -D'
 ########################### Docker  ############################
 ## GENERAL ##
 alias comp='docker-compose'
+alias comp_prod='docker-compose -f docker-compose.prod.yml'
 source_docker(){
     eval $(docker-machine env $1);
     echo "Docker Host :" $DOCKER_HOST;
@@ -176,3 +177,5 @@ tmat() { tm a -t $1;}
 tmswap() {tm switch -t $1;}
 
 kick_tmux() { tm new-session -A -s main; }
+alias python=python3
+alias pip=pip3
