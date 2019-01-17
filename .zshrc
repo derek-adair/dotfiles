@@ -200,7 +200,3 @@ if [[ -z "$TMUX" ]] then
 
   exec tmux new-session -t "$tmux_session"
 fi
-
-########################### powerline ####################
-. /home/ubuntu/tools/virtualenv/python3/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh
->>>>>>> a4de4c7e968f5452a0f803beef863a3638e1b43b
