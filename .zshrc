@@ -124,10 +124,9 @@ dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "http://$(docker-mac
 toss(){docker run -it --rm $@}
 hijack(){docker exec -it $1 bash}
 snatch(){docker exec -it $@}
+manage_c(){snatch $1 python manage.py ${@:2}}
 #Start a container 
 attach_c(){toss $1 /bin/bash}
-# run a manage.py command for django
-manage_c() { comp run --rm web python manage.py $@;}
 # Used to chown any files i generate with docker
 gime() { sudo chown -R $USER:$USER $@;}
 
@@ -162,10 +161,9 @@ function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$
 
 ## Python Virtualenvs ##
 
-export PY_VIRTUALENV_DIR="${DEV_DIR}tools/virtualenv"
-usePy() { source $PY_VIRTUALENV_DIR/$1/bin/activate;}
-alias listPy='ls $PY_VIRTUALENV_DIR'
-newPyEnv() { source $PY_VIRTUALENV_DIR/bootstrap/bin/activate; pip freeze > ~/requirements.txt; virtualenv $PY_VIRTUALENV_DIR/$1; source $PY_VIRTUALENV_DIR/$1/bin/activate; pip install -r ~/requirements.txt; rm requirements.txt;}
+# /path/to/your/root/virtualenv/no-slash
+VENV_DIR = "~/tools/venv"
+source $VENV_DIR/bin/activate
 
 http() {python -m SimpleHTTPServer $1}
 ########################### tmux ##########################
