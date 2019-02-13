@@ -105,19 +105,7 @@ alias kill_branch='git branch -D'
 ## GENERAL ##
 alias comp='docker-compose'
 alias comp_prod='docker-compose -f docker-compose.prod.yml'
-source_docker(){
-    eval $(docker-machine env $1);
-    echo "Docker Host :" $DOCKER_HOST;
-}
-kick_docker(){
-    restart_machine;
-    source_default;
-}
-restart_machine(){
-    docker-machine kill $1;
-    docker-machine start $1;
-}
-source_default(){source_docker default;}
+
 dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "http://$(docker-machine ip):$1";}
 
 ## CONTAINERS ##
@@ -129,18 +117,17 @@ manage_c(){snatch $1 python manage.py ${@:2}}
 attach_c(){toss $1 /bin/bash}
 # Used to chown any files i generate with docker
 gime() { sudo chown -R $USER:$USER $@;}
-
-
+# Stop all containers
 alias stop_containers='docker stop $(docker ps -q)'
 # kill all containers
 alias kill_em_all='docker kill $(docker ps -q)'
 # remove all non running containers
 alias remove_containers='docker rm `docker ps -aq`'
-# Nuke all containers from orbit
+# Removes all containers
 alias nuke_containers='docker rm -f $(docker ps -a -q)'
 # Essentially resets all container runtimes and leaves nothing
 #  - deletes all containers and volumes
-alias burn_it_all='docker rm -f $(docker ps -aq) && docker volume rm $(docker volume ls -q)'
+alias burn_it_all='nuke_containers && docker volume rm $(docker volume ls -q)'
 
 ## IMAGES ##
 # Build a template
