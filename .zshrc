@@ -106,7 +106,7 @@ alias kill_branch='git branch -D'
 alias comp='docker-compose'
 alias comp_prod='docker-compose -f docker-compose.prod.yml'
 
-dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "http://$(docker-machine ip):$1";}
+dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "//$DOCKER_HOST:$1";}
 
 ## CONTAINERS ##
 toss(){docker run -it --rm $@}
