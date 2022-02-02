@@ -149,8 +149,8 @@ function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$
 ## Python Virtualenvs ##
 
 # /path/to/your/root/virtualenv/no-slash
-VENV_DIR="/home/ubuntu/tools/venv"
-source $VENV_DIR/bin/activate
+#VENV_DIR="/home/ubuntu/tools/venv"
+#source $VENV_DIR/bin/activate
 
 http() {python -m SimpleHTTPServer $1}
 ########################### tmux ##########################
