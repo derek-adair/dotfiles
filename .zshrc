@@ -144,6 +144,16 @@ alias clean_images='docker rmi $(docker images | grep "^<none>" | awk "{print $3
 #Django Docker things
 function bootstrap_django(){docker run -it --rm --user "$(id -u):$(id -g)" -v "$PWD":/usr/src/app -w /usr/src/app django django-admin.py startproject $1}
 
+# Backup Volume to directory
+
+function extract_volume(){docker run --rm --volumes-from $1 -v $(pwd):/backup busybox tar cvf /backup/backup.tar /$2}
+function restore_volume(){docker run --rm --volumes-from $1 -v $(pwd):/backup busybox bash -c "cd $2 && tar xvf /backup/backup.tar --strip 1"}
+
+########################### Python ############################
+
+## Python Virtualenvs ##
+
+
 ########################### Python ############################
 
 ## Python Virtualenvs ##
