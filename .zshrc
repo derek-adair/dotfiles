@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="dracula"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -91,9 +91,9 @@ source ~/.nvm/nvm.sh
 # destroy all the cache
 function clear_pyc(){ find . -name "*.pyc" -exec rm -rf {} \;}
 # list dirs after i change
-function cd(){
-    builtin cd "$@" && ls
-}
+#function cd(){
+#    builtin cd "$@" && ls
+#}
 function untar(){tar -xvzf $@}
 
 ############################# Git ############################
@@ -169,26 +169,26 @@ tmat() { tm a -t $1;}
 tmswap() {tm switch -t $1;}
 
 # Auto Start
-if [[ -z "$TMUX" ]] then
-  tmux_session='#OMZ'
-
-  if ! tmux has-session -t "$tmux_session" 2> /dev/null; then
-    # Disable the destruction of unattached sessions globally.
-    tmux set-option -g destroy-unattached off &> /dev/null
-
-    # Create a new session.
-    tmux new-session -d -s "$tmux_session"
-
-    # Disable the destruction of the new, unattached session.
-    tmux set-option -t "$tmux_session" destroy-unattached off &> /dev/null
-
-    # Enable the destruction of unattached sessions globally to prevent
-    # an abundance of open, detached sessions.
-    tmux set-option -g destroy-unattached on &> /dev/null
-  fi
-
-  exec tmux new-session -t "$tmux_session"
-fi
+#if [[ -z "$TMUX" ]] then
+#  tmux_session='#OMZ'
+#
+#  if ! tmux has-session -t "$tmux_session" 2> /dev/null; then
+#    # Disable the destruction of unattached sessions globally.
+#    tmux set-option -g destroy-unattached off &> /dev/null
+#
+#    # Create a new session.
+#    tmux new-session -d -s "$tmux_session"
+#
+#    # Disable the destruction of the new, unattached session.
+#    tmux set-option -t "$tmux_session" destroy-unattached off &> /dev/null
+#
+#    # Enable the destruction of unattached sessions globally to prevent
+#    # an abundance of open, detached sessions.
+#    tmux set-option -g destroy-unattached on &> /dev/null
+#  fi
+#
+#  exec tmux new-session -t "$tmux_session"
+#fi
 
 
 
@@ -199,3 +199,6 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
 fi
 export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
+
+# Color
+export COLORTERM=truecolor
