@@ -103,8 +103,8 @@ alias kill_branch='git branch -D'
 
 ########################### Docker  ############################
 ## GENERAL ##
-alias comp='docker-compose'
-alias comp_prod='docker-compose -f docker-compose.prod.yml'
+alias comp='docker compose'
+alias comp_prod='docker compose -f docker compose.prod.yml'
 
 dopen(){ /usr/bin/open -a "/Applications/Google Chrome.app" "//$DOCKER_HOST:$1";}
 
